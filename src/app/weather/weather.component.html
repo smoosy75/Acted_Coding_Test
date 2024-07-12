@@ -1,0 +1,32 @@
+<div class="">
+  <div
+    class="card text-black bg-gray-50 p-4 rounded-lg opacity-80 m-5"
+    style="max-width: 18rem"
+  >
+    <div class="card-header">
+      <h2 class="font-medium text-2xl">Kabul, Afghanistan</h2>
+    </div>
+    <div class="pt-5">
+      <p class="text-sm font-medium">
+        Today: {{ currentDate | date : "MMM d h:mm" }}
+      </p>
+      <p class="text-7xl text-blue-950 font-bold">50 °C</p>
+    </div>
+    <div class="bg-gray-200 rounded-md py-3 mt-10">
+      <div class="flex items-center justify-center gap-5">
+        <p class="text-sm text-center">
+          Feels: <br />
+          23
+        </p>
+        <p class="text-sm text-center">
+          Pressure: <br />
+          2 hPa
+        </p>
+        <p class="text-sm text-center">
+          Humidity: <br />
+          10 %
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
