@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { WeatherComponent } from './weather/weather.component';
-import { CommonModule } from '@angular/common';
 import { WeatherService } from './weather.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { WeatherComponent } from './weather/weather.component';
 
 @Component({
   selector: 'app-root',
@@ -14,23 +16,30 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent {
   title = 'weatherAppTest';
   showWeather = false;
-  WeatherService: WeatherService; // Declare the WeatherService property
-  cityName: string = ''; // Declare and initialize the cityName property
+  cityName: string = '';
 
-  constructor(private weatherService: WeatherService) {
-    this.WeatherService = weatherService; // Initialize the WeatherService property
-  }
+  constructor(private weatherService: WeatherService) {}
 
   toggleWeather() {
     this.showWeather = !this.showWeather;
   }
 
   searchCity() {
-    const units = 'metric'; // or 'imperial' depending on your preference
-    this.WeatherService.getWeather(this.cityName, units).subscribe((data) => {
-      this.WeatherService.updateWeatherData(data);
-      this.toggleWeather();
-      this.showWeather = true; // Ajoutez ou ajustez cette ligne selon votre logique d'application
-    });
+    const units = 'metric';
+    this.weatherService
+      .getWeather(this.cityName, units)
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching weather data:', error);
+          return of(null);
+        })
+      )
+      .subscribe((data) => {
+        if (data) {
+          this.weatherService.updateWeatherData(data);
+          this.toggleWeather();
+          this.showWeather = true;
+        }
+      });
   }
 }

@@ -1,6 +1,6 @@
 <main>
-  <div class="bg">
-    <div
+  <section class="bg">
+    <header
       class="z-20 relative text-white text-center pt-20 md:pt-40 mx-4 animate-[slideUp_2s_ease-out]"
     >
       <h1 class="text-5xl mb-5 font-bold">
@@ -9,7 +9,7 @@
       <p class="text-lg lg:text-2xl">
         Please click on the button below to get the weather in your location.
       </p>
-    </div>
+    </header>
     <div
       *ngIf="!showWeather"
       class="absolute bottom-0 z-20 left-0 right-0 md:bottom-10 text-center mb-10 lg:bottom-52 animate-[slideUp_1s_ease-out]"
@@ -21,12 +21,14 @@
         Get Weather
       </button>
     </div>
-    <div *ngIf="showWeather" class="flex-col flex items-center">
+    <div *ngIf="showWeather" class="flex-col relative z-20 flex items-center">
       <app-weather class="md:w-[80%] lg:w-[50%]"></app-weather>
       <div class="mt-5">
         <input
           type="text"
-          placeholder="Enter a city name"
+          placeholder="Enter a city"
+          minlength="2"
+          maxlength="30"
           class="p-2 mr-5 rounded-lg border border-gray-300"
           [(ngModel)]="cityName"
         />
@@ -38,5 +40,5 @@
         </button>
       </div>
     </div>
-  </div>
+  </section>
 </main>

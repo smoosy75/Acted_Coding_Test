@@ -9,7 +9,6 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './weather.component.html',
-  styleUrls: ['./weather.component.css'],
 })
 export class WeatherComponent implements OnInit, OnDestroy {
   private weatherSubscription: Subscription = new Subscription();
@@ -59,7 +58,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
     this.temperture = data.main.temp;
     this.maxTemp = data.main.temp_max;
     this.minTemp = data.main.temp_min;
-    this.city = data.name;
+    this.city;
     this.humidity = data.main.humidity;
     this.windSpeed = data.wind.speed;
     this.feelsLike = data.main.feels_like;
