@@ -17,7 +17,7 @@ export class WeatherComponent implements OnInit {
   humidity: number = 0;
   windSpeed: number = 0;
   feelsLike: number = 0;
-
+  weatherIcon: string = '';
   constructor(private weatherService: WeatherService) {}
 
   ngOnInit(): void {
@@ -32,6 +32,9 @@ export class WeatherComponent implements OnInit {
         this.humidity = this.myweather.main.humidity;
         this.windSpeed = this.myweather.wind.speed;
         this.feelsLike = this.myweather.main.feels_like;
+        this.weatherIcon = this.getWeatherIconPath(
+          this.myweather.weather[0].icon
+        );
       },
       error: (err) => {
         console.log(err);
@@ -40,6 +43,27 @@ export class WeatherComponent implements OnInit {
         console.log('complete');
       },
     });
+  }
+
+  getWeatherIconPath(iconCode: string): string {
+    switch (iconCode) {
+      case '02d' || 'O2n':
+        return '/assets/Sun-And-CloudsV2.gif';
+      case '01d' || '01n':
+        return '/assets/SunnyV2.gif';
+      case '03d' || '03n':
+        return '/assets/Half-Sun-Half-CloudsV2.gif';
+      case '04d' || '04n':
+        return '/assets/CloudyV2.gif';
+      case '09d' || '09n':
+        return '/assets/Slight-RainV2.gif';
+      case '10d' || '10n':
+        return '/assets/RainV2.gif';
+      case '11d' || '11n':
+        return '/assets/ThunderstormV2.gif';
+      default:
+        return '/assets/Sun-And-CloudsV2.gif';
+    }
   }
 
   currentDate = new Date();

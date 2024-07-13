@@ -1,27 +1,33 @@
-<article class="mx-auto">
+<article class="">
   <div
-    class="card text-black bg-gray-50 p-4 rounded-lg opacity-80 m-5"
-    style="max-width: 18rem"
+    class="card text-black bg-gray-50 p-4 rounded-lg opacity-80 m-5 animate-[slideUp_1s_ease-out]"
   >
-    <div class="card-header">
-      <h2 class="font-medium text-2xl">Kabul, Afghanistan</h2>
-    </div>
-    <div class="pt-5">
-      <p class="text-sm font-medium">
-        Today: {{ currentDate | date : "MMM d h:mm" }}
-      </p>
-      <p class="text-7xl text-blue-950 font-bold">
-        {{ temperture | number : "1.0-0" }} °C
-      </p>
-      <div class="flex">
-        <p class="text-sm mr-6">↑ {{ maxTemp | number : "1.0-0" }}</p>
-        <p class="text-sm">↓ {{ minTemp | number : "1.0-0" }}</p>
+    <div class="md:flex md:justify-between md:px-4">
+      <div>
+        <h2 class="font-medium text-2xl lg:text-4xl">Kabul, Afghanistan</h2>
+
+        <p class="text-sm font-medium pt-5">
+          Today: {{ currentDate | date : "MMM d h:mm" }}
+        </p>
+        <p class="text-7xl text-blue-950 font-bold">
+          {{ temperture | number : "1.0-0" }} °C
+        </p>
+
+        <div class="flex">
+          <p class="text-sm mr-6">↑ {{ maxTemp | number : "1.0-0" }}</p>
+          <p class="text-sm">↓ {{ minTemp | number : "1.0-0" }}</p>
+        </div>
+      </div>
+
+      <div class="hidden md:flex md:items-center">
+        <img class="w-52" [src]="weatherIcon" alt="Weather Icon" />
       </div>
     </div>
+
     <div
-      class="bg-gray-200 rounded-md py-3 mt-10 border border-opacity-10 border-blue-950"
+      class="bg-gray-200 lg:w-[60%] lg:mx-auto rounded-md py-3 mt-10 border border-opacity-10 border-blue-950"
     >
-      <div class="flex items-center justify-center gap-5">
+      <div class="flex items-center justify-center lg:justify-evenly gap-5">
         <p class="text-sm text-center font-medium">
           Feels: <br />
           {{ feelsLike | number : "1.0-0" }} °C

@@ -11,6 +11,7 @@
       </p>
     </div>
     <div
+      *ngIf="!showWeather"
       class="absolute bottom-0 z-20 left-0 right-0 md:bottom-10 text-center mb-10 lg:bottom-52 animate-[slideUp_1s_ease-out]"
     >
       <button
@@ -20,6 +21,11 @@
         Get Weather
       </button>
     </div>
-    <app-weather *ngIf="showWeather"></app-weather>
+    <div class="flex justify-center">
+      <app-weather
+        *ngIf="showWeather"
+        class="md:w-[80%] lg:w-[50%]"
+      ></app-weather>
+    </div>
   </div>
 </main>
