@@ -61,6 +61,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
     this.city;
     this.humidity = data.main.humidity;
     this.windSpeed = data.wind.speed;
+    this.city = data.name;
     this.feelsLike = data.main.feels_like;
     this.country = data.sys.country;
     this.weatherIcon = this.getWeatherIconPath(data.weather[0].icon);
