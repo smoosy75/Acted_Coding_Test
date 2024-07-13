@@ -1,15 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { WeatherService } from '../weather.service';
+import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-weather',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './weather.component.html',
   styleUrls: ['./weather.component.css'],
 })
-export class WeatherComponent implements OnInit {
+export class WeatherComponent implements OnInit, OnDestroy {
+  private weatherSubscription: Subscription = new Subscription();
+
   myweather: any;
   temperture: number = 0;
   maxTemp: number = 0;
@@ -18,48 +22,74 @@ export class WeatherComponent implements OnInit {
   windSpeed: number = 0;
   feelsLike: number = 0;
   weatherIcon: string = '';
-  constructor(private weatherService: WeatherService) {}
+  city: string = 'Kabul';
+  country: string = 'AF';
+  units: string = 'metric';
+  searchQuery: string = '';
+  weatherData: any;
 
+  constructor(private weatherService: WeatherService) {}
   ngOnInit(): void {
-    this.weatherService.getWeather().subscribe({
-      next: (res) => {
-        console.log(res);
-        this.myweather = res;
-        console.log(this.myweather);
-        this.temperture = this.myweather.main.temp;
-        this.maxTemp = this.myweather.main.temp_max;
-        this.minTemp = this.myweather.main.temp_min;
-        this.humidity = this.myweather.main.humidity;
-        this.windSpeed = this.myweather.wind.speed;
-        this.feelsLike = this.myweather.main.feels_like;
-        this.weatherIcon = this.getWeatherIconPath(
-          this.myweather.weather[0].icon
-        );
+    // Souscrivez à weatherData pour recevoir les mises à jour
+    this.weatherSubscription = this.weatherService.getWeatherData().subscribe({
+      next: (data: any) => {
+        if (data) {
+          // Assurez-vous que les données ne sont pas null
+          this.updateWeatherComponent(data);
+        }
       },
-      error: (err) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('complete');
-      },
+      error: (err: any) => console.error(err),
+    });
+
+    // Initialisation de la demande de données météo
+    this.weatherService.getWeather(this.city, this.units).subscribe({
+      next: (res: any) => this.weatherService.updateWeatherData(res),
+      error: (err: any) => console.error(err),
     });
   }
 
+  ngOnDestroy(): void {
+    // Assurez-vous de désabonner pour éviter les fuites de mémoire
+    this.weatherSubscription.unsubscribe();
+  }
+
+  updateWeatherComponent(data: any): void {
+    // Mettez à jour les propriétés du composant avec les nouvelles données
+    this.myweather = data;
+    this.temperture = data.main.temp;
+    this.maxTemp = data.main.temp_max;
+    this.minTemp = data.main.temp_min;
+    this.city = data.name;
+    this.humidity = data.main.humidity;
+    this.windSpeed = data.wind.speed;
+    this.feelsLike = data.main.feels_like;
+    this.country = data.sys.country;
+    this.weatherIcon = this.getWeatherIconPath(data.weather[0].icon);
+
+    // La méthode getWeatherIconPath reste inchangée
+  }
   getWeatherIconPath(iconCode: string): string {
     switch (iconCode) {
-      case '02d' || 'O2n':
+      case '02d':
+      case '02n':
         return '/assets/Sun-And-CloudsV2.gif';
-      case '01d' || '01n':
+      case '01d':
+      case '01n':
         return '/assets/SunnyV2.gif';
-      case '03d' || '03n':
+      case '03d':
+      case '03n':
         return '/assets/Half-Sun-Half-CloudsV2.gif';
-      case '04d' || '04n':
+      case '04d':
+      case '04n':
         return '/assets/CloudyV2.gif';
-      case '09d' || '09n':
+      case '09d':
+      case '09n':
         return '/assets/Slight-RainV2.gif';
-      case '10d' || '10n':
+      case '10d':
+      case '10n':
         return '/assets/RainV2.gif';
-      case '11d' || '11n':
+      case '11d':
+      case '11n':
         return '/assets/ThunderstormV2.gif';
       default:
         return '/assets/Sun-And-CloudsV2.gif';

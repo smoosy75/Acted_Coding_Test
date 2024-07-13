@@ -1,10 +1,12 @@
 <article class="">
   <div
-    class="card text-black bg-gray-50 p-4 rounded-lg opacity-80 m-5 animate-[slideUp_1s_ease-out]"
+    class="text-black bg-gray-50 p-4 rounded-lg opacity-80 m-5 animate-[slideUp_1s_ease-out]"
   >
     <div class="md:flex md:justify-between md:px-4">
       <div>
-        <h2 class="font-medium text-2xl lg:text-4xl">Kabul, Afghanistan</h2>
+        <h2 class="font-medium text-2xl lg:text-4xl">
+          {{ city }}, {{ country }}
+        </h2>
 
         <p class="text-sm font-medium pt-5">
           Today: {{ currentDate | date : "MMM d h:mm" }}
@@ -19,7 +21,7 @@
         </div>
       </div>
 
-      <div class="hidden md:flex md:items-center">
+      <div class="hidden md:flex md:items-center lg:pr-10">
         <img class="w-52" [src]="weatherIcon" alt="Weather Icon" />
       </div>
     </div>
