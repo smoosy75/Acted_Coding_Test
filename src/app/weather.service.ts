@@ -34,12 +34,18 @@ export class WeatherService {
 
   constructor(private http: HttpClient) {}
 
-  getWeather(city: string, units: string): Observable<WeatherResponse> {
+  getWeather({
+    city,
+    units,
+  }: {
+    city: string;
+    units: string;
+  }): Observable<WeatherResponse> {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${environment.WEATHER_API_KEY}&units=${units}`;
     return this.http.get<WeatherResponse>(url).pipe(
       catchError((error) => {
         console.error('Error fetching weather data:', error);
-        return throwError(error);
+        return throwError(() => new Error('Error fetching weather data'));
       })
     );
   }

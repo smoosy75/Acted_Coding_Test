@@ -38,10 +38,12 @@ export class WeatherComponent implements OnInit, OnDestroy {
       error: (err: any) => console.error(err),
     });
 
-    this.weatherService.getWeather(this.city, this.units).subscribe({
-      next: (res: any) => this.weatherService.updateWeatherData(res),
-      error: (err: any) => console.error(err),
-    });
+    this.weatherService
+      .getWeather({ city: this.city, units: this.units })
+      .subscribe({
+        next: (res: any) => this.weatherService.updateWeatherData(res),
+        error: (err: any) => console.error(err),
+      });
   }
 
   ngOnDestroy(): void {

@@ -27,7 +27,7 @@ export class AppComponent {
   searchCity() {
     const units = 'metric';
     this.weatherService
-      .getWeather(this.cityName, units)
+      .getWeather({ city: this.cityName, units })
       .pipe(
         catchError((error) => {
           console.error('Error fetching weather data:', error);

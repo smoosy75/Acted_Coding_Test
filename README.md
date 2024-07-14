@@ -20,7 +20,3 @@ This will install all the necessary dependencies for the project.
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Future improvement
-
-## Future improvement
