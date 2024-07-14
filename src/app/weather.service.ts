@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { environment } from '../environment/environment';
+import { environment } from '../environments/environment';
 
 interface WeatherResponse {
   main: {
@@ -35,7 +35,7 @@ export class WeatherService {
   constructor(private http: HttpClient) {}
 
   getWeather(city: string, units: string): Observable<WeatherResponse> {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${environment.weatherApiKey}&units=${units}`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${environment.WEATHER_API_KEY}&units=${units}`;
     return this.http.get<WeatherResponse>(url).pipe(
       catchError((error) => {
         console.error('Error fetching weather data:', error);

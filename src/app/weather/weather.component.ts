@@ -29,18 +29,15 @@ export class WeatherComponent implements OnInit, OnDestroy {
 
   constructor(private weatherService: WeatherService) {}
   ngOnInit(): void {
-    // Souscrivez à weatherData pour recevoir les mises à jour
     this.weatherSubscription = this.weatherService.getWeatherData().subscribe({
       next: (data: any) => {
         if (data) {
-          // Assurez-vous que les données ne sont pas null
           this.updateWeatherComponent(data);
         }
       },
       error: (err: any) => console.error(err),
     });
 
-    // Initialisation de la demande de données météo
     this.weatherService.getWeather(this.city, this.units).subscribe({
       next: (res: any) => this.weatherService.updateWeatherData(res),
       error: (err: any) => console.error(err),
@@ -48,12 +45,10 @@ export class WeatherComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Assurez-vous de désabonner pour éviter les fuites de mémoire
     this.weatherSubscription.unsubscribe();
   }
 
   updateWeatherComponent(data: any): void {
-    // Mettez à jour les propriétés du composant avec les nouvelles données
     this.myweather = data;
     this.temperture = data.main.temp;
     this.maxTemp = data.main.temp_max;
@@ -65,8 +60,6 @@ export class WeatherComponent implements OnInit, OnDestroy {
     this.feelsLike = data.main.feels_like;
     this.country = data.sys.country;
     this.weatherIcon = this.getWeatherIconPath(data.weather[0].icon);
-
-    // La méthode getWeatherIconPath reste inchangée
   }
   getWeatherIconPath(iconCode: string): string {
     switch (iconCode) {
