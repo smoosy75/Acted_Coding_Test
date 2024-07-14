@@ -22,7 +22,7 @@
       </button>
     </div>
     <div *ngIf="showWeather" class="flex-col relative z-20 flex items-center">
-      <app-weather class="md:w-[80%] lg:w-[50%]"></app-weather>
+      <app-weather class="md:w-[80%] lg:w-[50%] 2xl:w-[640px]"></app-weather>
       <form (ngSubmit)="searchCity()" class="mt-5">
         <input
           type="text"
